@@ -11,7 +11,6 @@ jobs:
       run: |
         release_tag="FriendlyWrt-$(date +%Y-%m-%d)"
         echo "##[set-output name=release_tag;]$release_tag"
-
     - name: Create empty release
       id: release
       uses: softprops/action-gh-release@v1
@@ -57,14 +56,12 @@ jobs:
         sudo swapoff -a
         sudo rm -rf /usr/share/dotnet /usr/local/lib/android/sdk /usr/local/share/boost /opt/ghc
         echo "cores: $(nproc)"
-
     - name: Download source
       run: |
         mkdir project
         cd project
         repo init --depth=1 -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v${{ matrix.VERSION }} \
                 -m rk3399.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
-
         repo sync -c friendlywrt --no-clone-bundle
         repo sync -c configs --no-clone-bundle
         repo sync -c device/common --no-clone-bundle
@@ -72,13 +69,11 @@ jobs:
         repo sync -c scripts --no-clone-bundle
         repo sync -c scripts/sd-fuse  --no-clone-bundle
         repo sync -c toolchain  --no-clone-bundle
-
     - name: Apply customizations
       run: |
         cd project
         source ../scripts/add_packages.sh
         source ../scripts/custome_config.sh
-
     - name: Prepare dot config and feeds
       run: |
         cd project
@@ -91,14 +86,12 @@ jobs:
         TARGET_FRIENDLYWRT_CONFIG=${CONFIG}
         EOL
         DEBUG_DOT_CONFIG=1 ./build.sh friendlywrt
-
     - name: Download package
       run: |
         cd project/friendlywrt
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-
     - name: Compile friendlyWrt
       id: compile
       continue-on-error: true
@@ -106,13 +99,11 @@ jobs:
         cd project/friendlywrt
         make -j$(nproc) || make -j1 V=s
         echo $?
-
     - name: Check the result and try again
       if: steps.compile.outcome == 'failure'
       run: |
         cd project/friendlywrt
         make -j1 V=s
-
     - name: Create rootfs package
       id: create_rootfs_package
       run: |
@@ -123,7 +114,6 @@ jobs:
         tar cvzf ../artifact/${rootfs_filename} ${FRIENDLYWRT_SRC}/${FRIENDLYWRT_ROOTFS} \
               ${FRIENDLYWRT_SRC}/${FRIENDLYWRT_PACKAGE_DIR}
         echo "##[set-output name=rootfs_filename;]$rootfs_filename"
-
     - name: Upload rootfs package
       uses: svenstaro/upload-release-action@v2
       with:
@@ -141,7 +131,7 @@ jobs:
     strategy:
       matrix:
         VERSION: [21.02, 22.03]
-        CPU: [rk3328, rk3399, rk3568, rk3588]
+        CPU: [rk3588]
         SET: [docker, non-docker]
     steps:
     - name: Checkout
@@ -166,14 +156,12 @@ jobs:
         sudo swapoff -a
         sudo rm -rf /usr/share/dotnet /usr/local/lib/android/sdk /usr/local/share/boost /opt/ghc
         echo "cores: $(nproc)"
-
     - name: Download source
       run: |
         mkdir project
         cd project
         repo init --depth=1 -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v${{ matrix.VERSION }} \
                 -m ${{ matrix.CPU }}.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
-
         repo sync -c kernel --no-clone-bundle
         repo sync -c u-boot --no-clone-bundle
         repo sync -c rkbin --no-clone-bundle
@@ -183,10 +171,9 @@ jobs:
         repo sync -c scripts --no-clone-bundle
         repo sync -c scripts/sd-fuse  --no-clone-bundle
         repo sync -c toolchain  --no-clone-bundle
-
     - name: Download friendlywrt rootfs (non-docker)
       if: matrix.SET == 'non-docker'
-      uses: robinraju/release-downloader@v1.5
+      uses: robinraju/release-downloader@v1.6
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -196,7 +183,7 @@ jobs:
 
     - name: Download friendlywrt rootfs (docker)
       if: matrix.SET == 'docker'
-      uses: robinraju/release-downloader@v1.5
+      uses: robinraju/release-downloader@v1.6
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -237,19 +224,16 @@ jobs:
         TARGET_SD_RAW_FILENAME=${FILENAME}
         EOL
         echo "##[set-output name=img_filename;]$FILENAME"
-
     - name: Unpack friendlywrt rootfs
       run: |
         cd project
         [ "${{ matrix.SET }}" == "docker" ] && SUFFIX="-docker"
         tar xvzf "../rootfs-friendlywrt-${{ matrix.VERSION }}${SUFFIX}.tgz"
-
     - name: Compile uboot and kernel
       run: |
         cd project
         ./build.sh kernel
         ./build.sh uboot
-
     - name: Build sd image
       id: build_sd_image
       run: |
@@ -258,7 +242,6 @@ jobs:
         mv out/${{ steps.config.outputs.img_filename }} ../artifact/
         cd ../artifact/
         gzip *.img
-
     - name: Upload image to release
       uses: svenstaro/upload-release-action@v2
       with:
@@ -267,4 +250,3 @@ jobs:
         asset_name: ${{ steps.config.outputs.img_filename }}.gz
         tag: ${{ needs.prepare_release.outputs.release_tag }}
         overwrite: true
-
