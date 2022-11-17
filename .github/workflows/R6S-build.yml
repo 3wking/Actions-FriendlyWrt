@@ -1,6 +1,17 @@
+
+name: Build R6S
+
 on:
-  watch:
-    types: started
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+#on:
+  #watch:
+    #types: started
 jobs:
   prepare_release:
     runs-on: ubuntu-20.04
