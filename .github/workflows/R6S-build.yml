@@ -83,8 +83,8 @@ jobs:
     - name: Apply customizations
       run: |
         cd project
-        source ../scripts/add_packages.sh
-        source ../scripts/custome_config.sh
+        source ../scripts/add_R6S_packages.sh
+        source ../scripts/custome_R6S_config.sh
     - name: Prepare dot config and feeds
       run: |
         cd project
