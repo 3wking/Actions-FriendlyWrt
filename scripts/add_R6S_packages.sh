@@ -19,6 +19,8 @@ EOL
 (cd friendlywrt/package && {
     [ -d luci-app-openclash ] && rm -rf luci-app-openclash
     git clone https://github.com/vernesong/OpenClash.git
+    mv friendlywrt/package/OpenClash/luci-app-openclash friendlywrt/package/luci-app-openclash
+    [ -d luci-app-openclash ] && echo "luci-app-openclash.....OK"
 })
 echo "CONFIG_PACKAGE_luci-app-openclash=y" >> configs/rockchip/01-nanopi
 # }}
@@ -27,6 +29,7 @@ echo "CONFIG_PACKAGE_luci-app-openclash=y" >> configs/rockchip/01-nanopi
 (cd friendlywrt/package && {
     [ -d luci-app-ipsec-vpnd ] && rm -rf luci-app-ipsec-vpnd
     git clone https://github.com/tungnt017/luci-app-ipsec-vpnd.git
+    [ -d luci-app-ipsec-vpnd ] && echo "luci-app-ipsec-vpnd.....OK"
 })
 echo "CONFIG_PACKAGE_luci-app-ipsec-vpnd=y" >> configs/rockchip/01-nanopi
 # }}
@@ -35,6 +38,7 @@ echo "CONFIG_PACKAGE_luci-app-ipsec-vpnd=y" >> configs/rockchip/01-nanopi
 (cd friendlywrt/package && {
     [ -d luci-app-pptp-server ] && rm -rf luci-app-pptp-server
     git clone https://github.com/xkstudio/luci-app-pptp-server.git
+    [ -d luci-app-ipsec-vpnd ] && echo "luci-app-pptp-server.....OK"
 })
 echo "CONFIG_PACKAGE_luci-app-pptp-server=y" >> configs/rockchip/01-nanopi
 # }}
