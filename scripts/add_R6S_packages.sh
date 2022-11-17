@@ -38,7 +38,7 @@ echo "CONFIG_PACKAGE_luci-app-ipsec-vpnd=y" >> configs/rockchip/01-nanopi
 (cd friendlywrt/package && {
     [ -d luci-app-pptp-server ] && rm -rf luci-app-pptp-server
     git clone https://github.com/xkstudio/luci-app-pptp-server.git
-    [ -d luci-app-ipsec-vpnd ] && echo "luci-app-pptp-server.....OK"
+    [ -d luci-app-pptp-server ] && echo "luci-app-pptp-server.....OK"
 })
 echo "CONFIG_PACKAGE_luci-app-pptp-server=y" >> configs/rockchip/01-nanopi
 # }}
