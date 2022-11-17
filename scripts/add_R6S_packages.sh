@@ -19,6 +19,7 @@ EOL
 (cd friendlywrt/package && {
     [ -d luci-app-openclash ] && rm -rf luci-app-openclash
     git clone https://github.com/vernesong/OpenClash.git
+    pwd
     cp -r /friendlywrt/package/OpenClash/luci-app-openclash /friendlywrt/package
     rm -rf OpenClash
     [ -d luci-app-openclash ] && echo "luci-app-openclash.....OK"
