@@ -20,6 +20,7 @@ EOL
     [ -d luci-app-openclash ] && rm -rf luci-app-openclash
     git clone https://github.com/vernesong/OpenClash.git
     mv friendlywrt/package/OpenClash/luci-app-openclash friendlywrt/package/luci-app-openclash
+    rm -rf OpenClash
     [ -d luci-app-openclash ] && echo "luci-app-openclash.....OK"
 })
 echo "CONFIG_PACKAGE_luci-app-openclash=y" >> configs/rockchip/01-nanopi
