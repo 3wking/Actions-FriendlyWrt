@@ -25,6 +25,26 @@ CONFIG_PACKAGE_luci-app-openclash=y
 EOL
 # }}
 
+# {{ Add luci-app-ipsec-vpnd
+(cd friendlywrt && {
+    mkdir -p package/luci-app-ipsec-vpnd
+    git clone https://github.com/tungnt017/luci-app-ipsec-vpnd.git
+})
+cat >> configs/rockchip/01-nanopi <<EOL
+CONFIG_PACKAGE_luci-app-ipsec-vpnd=y
+EOL
+# }}
+
+# {{ Add luci-app-pptp-server
+(cd friendlywrt && {
+    mkdir -p package/luci-app-pptp-server
+    git clone https://github.com/xkstudio/luci-app-pptp-server.git
+})
+cat >> configs/rockchip/01-nanopi <<EOL
+CONFIG_PACKAGE_luci-app-pptp-server=y
+EOL
+# }}
+
 # {{ Add luci-theme-argon
 (cd friendlywrt/package && {
     [ -d luci-theme-argon ] && rm -rf luci-theme-argon
