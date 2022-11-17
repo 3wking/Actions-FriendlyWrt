@@ -18,7 +18,7 @@ EOL
 # {{ Add luci-app-openclash
 (cd friendlywrt && {
     mkdir -p package/luci-app-openclash
-    git remote add -f origin https://github.com/vernesong/OpenClash.git
+    git clone https://github.com/vernesong/OpenClash.git
 })
 cat >> configs/rockchip/01-nanopi <<EOL
 CONFIG_PACKAGE_luci-app-openclash=y
