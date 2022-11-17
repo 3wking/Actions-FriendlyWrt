@@ -15,6 +15,16 @@ CONFIG_PACKAGE_smartmontools=y
 EOL
 # }}
 
+# {{ Add luci-app-openclash
+(cd friendlywrt && {
+    mkdir -p package/luci-app-openclash
+    git remote add -f origin https://github.com/vernesong/OpenClash.git
+})
+cat >> configs/rockchip/01-nanopi <<EOL
+CONFIG_PACKAGE_luci-app-openclash=y
+EOL
+# }}
+
 # {{ Add luci-theme-argon
 (cd friendlywrt/package && {
     [ -d luci-theme-argon ] && rm -rf luci-theme-argon
