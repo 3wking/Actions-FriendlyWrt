@@ -16,38 +16,32 @@ EOL
 # }}
 
 # {{ Add luci-app-openclash
-(cd friendlywrt && {
-    mkdir -p package/luci-app-openclash
+(cd friendlywrt/package && {
+    [ -d luci-app-openclash ] && rm -rf luci-app-openclash
     git clone https://github.com/vernesong/OpenClash.git
 })
-cat >> configs/rockchip/01-nanopi <<EOL
-CONFIG_PACKAGE_luci-app-openclash=y
-EOL
+echo "CONFIG_PACKAGE_luci-app-openclash=y" >> configs/rockchip/01-nanopi
 # }}
 
 # {{ Add luci-app-ipsec-vpnd
-(cd friendlywrt && {
-    mkdir -p package/luci-app-ipsec-vpnd
+(cd friendlywrt/package && {
+    [ -d luci-app-ipsec-vpnd ] && rm -rf luci-app-ipsec-vpnd
     git clone https://github.com/tungnt017/luci-app-ipsec-vpnd.git
 })
-cat >> configs/rockchip/01-nanopi <<EOL
-CONFIG_PACKAGE_luci-app-ipsec-vpnd=y
-EOL
+echo "CONFIG_PACKAGE_luci-app-ipsec-vpnd=y" >> configs/rockchip/01-nanopi
 # }}
 
 # {{ Add luci-app-pptp-server
-(cd friendlywrt && {
-    mkdir -p package/luci-app-pptp-server
+(cd friendlywrt/package && {
+    [ -d luci-app-pptp-server ] && rm -rf luci-app-pptp-server
     git clone https://github.com/xkstudio/luci-app-pptp-server.git
 })
-cat >> configs/rockchip/01-nanopi <<EOL
-CONFIG_PACKAGE_luci-app-pptp-server=y
-EOL
+echo "CONFIG_PACKAGE_luci-app-pptp-server=y" >> configs/rockchip/01-nanopi
 # }}
 
 # {{ Add luci-theme-argon
 (cd friendlywrt/package && {
-    [ -d luci-theme-argon ] && rm -rf luci-theme-argon
+    [ -d luci-theme-argon ] && rm -rf luci-theme-argon[ -d luci-theme-argon ] && rm -rf luci-theme-argon
     git clone https://github.com/jerrykuku/luci-theme-argon.git --depth 1 -b master
 })
 echo "CONFIG_PACKAGE_luci-theme-argon=y" >> configs/rockchip/01-nanopi
