@@ -1,4 +1,4 @@
-name: Build R6S
+name: Build rk3588_21.02
 
 on:
   repository_dispatch:
