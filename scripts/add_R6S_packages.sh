@@ -15,6 +15,25 @@ CONFIG_PACKAGE_smartmontools=y
 EOL
 # }}
 
+# {{ Add small-package
+(cd friendlywrt && {
+    [ -d feeds.conf.default ] && 
+    sed -i '$a src-git small8 https://github.com/kenzok8/small-package' feeds.conf.default && 
+    ./scripts/feeds update -a && ./scripts/feeds install -a    
+})
+# }}
+
+# {{ Add luci-app-ipsec-vpnd
+(cd friendlywrt/package && {
+    [ -d luci-app-ipsec-vpnd ] && rm -rf luci-app-ipsec-vpnd
+    git clone https://github.com/tungnt017/luci-app-ipsec-vpnd.git
+    [ -d luci-app-ipsec-vpnd ] && echo "luci-app-ipsec-vpnd.....OK"
+})
+echo "CONFIG_PACKAGE_luci-app-ipsec-vpnd=y" >> configs/rockchip/01-nanopi
+# }}
+
+
+
 # {{ Add luci-app-openclash
 (cd friendlywrt/package && {
     [ -d luci-app-openclash ] && rm -rf luci-app-openclash
