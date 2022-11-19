@@ -23,6 +23,15 @@ EOL
 })
 # }}
 
+# {{ Add small8
+(cd friendlywrt/package && {
+    [ -d luci-app-openclash ] && echo "luci-app-openclash.....OK" && echo "CONFIG_PACKAGE_luci-app-openclash=y" >> configs/rockchip/01-nanopi 
+    [ -d luci-app-store ] && echo "luci-app-store.....OK" && echo "CONFIG_PACKAGE_luci-app-store=y" >> configs/rockchip/01-nanopi
+    [ -d luci-app-v2raya ] && echo "luci-app-v2raya.....OK" && echo "CONFIG_PACKAGE_luci-app-v2raya=y" >> configs/rockchip/01-nanopi 
+})
+# }}
+
+
 # {{ Add luci-app-ipsec-vpnd
 (cd friendlywrt/package && {
     [ -d luci-app-ipsec-vpnd ] && rm -rf luci-app-ipsec-vpnd
