@@ -23,25 +23,25 @@ EOL
 })
 # }}
 
-# {{ Add small8
-(cd friendlywrt/package && {
-    [ -d luci-app-openclash ] && echo "luci-app-openclash.....OK" && echo "CONFIG_PACKAGE_luci-app-openclash=y" >> configs/rockchip/01-nanopi 
-    [ -d luci-app-store ] && echo "luci-app-store.....OK" && echo "CONFIG_PACKAGE_luci-app-store=y" >> configs/rockchip/01-nanopi
-    [ -d luci-app-v2raya ] && echo "luci-app-v2raya.....OK" && echo "CONFIG_PACKAGE_luci-app-v2raya=y" >> configs/rockchip/01-nanopi 
+# {{ Add diy
+(cd friendlywrt && {
+   sed -i 's/192.168.1.1/10.10.10.254/g' package/base-files/files/bin/config_generate
+   #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+   cat >package/base-files/files/etc/banner<<EOF
+     $$$$$$\  $$\      $$\ $$\   $$\ $$$$$$\ $$\   $$\  $$$$$$\  
+    $$ ___$$\ $$ | $\  $$ |$$ | $$  |\_$$  _|$$$\  $$ |$$  __$$\ 
+    \_/   $$ |$$ |$$$\ $$ |$$ |$$  /   $$ |  $$$$\ $$ |$$ /  \__|
+      $$$$$ / $$ $$ $$\$$ |$$$$$  /    $$ |  $$ $$\$$ |$$ |$$$$\ 
+      \___$$\ $$$$  _$$$$ |$$  $$<     $$ |  $$ \$$$$ |$$ |\_$$ |
+    $$\   $$ |$$$  / \$$$ |$$ |\$$\    $$ |  $$ |\$$$ |$$ |  $$ |
+    \$$$$$$  |$$  /   \$$ |$$ | \$$\ $$$$$$\ $$ | \$$ |\$$$$$$  |
+    \______/ \__/     \__|\__|  \__|\______|\__|  \__| \______/ 
+    -------------------------------------------------------------
+    & by 3wking |$	%D %V, %C	$|    
+    -------------------------------------------------------------
+    EOF
 })
 # }}
-
-
-# {{ Add luci-app-ipsec-vpnd
-(cd friendlywrt/package && {
-    [ -d luci-app-ipsec-vpnd ] && rm -rf luci-app-ipsec-vpnd
-    git clone https://github.com/tungnt017/luci-app-ipsec-vpnd.git
-    [ -d luci-app-ipsec-vpnd ] && echo "luci-app-ipsec-vpnd.....OK"
-})
-echo "CONFIG_PACKAGE_luci-app-ipsec-vpnd=y" >> configs/rockchip/01-nanopi
-# }}
-
-
 
 # {{ Add luci-app-openclash
 (cd friendlywrt/package && {
@@ -69,6 +69,24 @@ echo "CONFIG_PACKAGE_luci-app-ipsec-vpnd=y" >> configs/rockchip/01-nanopi
     [ -d luci-app-pptp-server ] && echo "luci-app-pptp-server.....OK"
 })
 echo "CONFIG_PACKAGE_luci-app-pptp-server=y" >> configs/rockchip/01-nanopi
+# }}
+
+# {{ Add luci-app-v2ray-server
+(cd friendlywrt/package && {
+    [ -d luci-app-v2ray-server ] && rm -rf luci-app-v2ray-server
+    git clone https://github.com/esirplayground/luci-app-v2ray-server.git
+    [ -d luci-app-v2ray-server ] && echo "luci-app-v2ray-server.....OK"
+})
+echo "CONFIG_PACKAGE_luci-app-v2ray-server=y" >> configs/rockchip/01-nanopi
+# }}
+
+# {{ Add luci-app-argonne-config
+(cd friendlywrt/package && {
+    [ -d luci-app-argonne-config ] && rm -rf luci-app-argonne-config
+    git https://github.com/kenzok78/luci-app-argonne-config.git
+    [ -d luci-app-argonne-config ] && echo "luci-app-argonne-config.....OK"
+})
+echo "CONFIG_PACKAGE_luci-app-argonne-config=y" >> configs/rockchip/01-nanopi
 # }}
 
 # {{ Add luci-theme-argon
