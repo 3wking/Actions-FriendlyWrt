@@ -15,17 +15,9 @@ CONFIG_PACKAGE_smartmontools=y
 EOL
 # }}
 
-# {{ Add small-package
-(cd friendlywrt && {
-    [ -d feeds.conf.default ] && 
-    sed -i '$a src-git small8 https://github.com/kenzok8/small-package' feeds.conf.default && 
-    ./scripts/feeds update -a && ./scripts/feeds install -a    
-})
-# }}
-
 # {{ Add diy
 (cd friendlywrt && {
-   sed -i 's/192.168.1.1/10.10.10.254/g' package/base-files/files/bin/config_generate
+   #sed -i 's/192.168.1.1/10.10.10.254/g' package/base-files/files/bin/config_generate
    #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
    cat >package/base-files/files/etc/banner<<EOF
      $$$$$$\  $$\      $$\ $$\   $$\ $$$$$$\ $$\   $$\  $$$$$$\  
@@ -80,10 +72,20 @@ echo "CONFIG_PACKAGE_luci-app-pptp-server=y" >> configs/rockchip/01-nanopi
 echo "CONFIG_PACKAGE_luci-app-v2ray-server=y" >> configs/rockchip/01-nanopi
 # }}
 
+# {{ Add luci-app-store
+(cd friendlywrt/package && {
+    [ -d luci-app-store ] && rm -rf luci-app-store
+    git clone https://github.com/linkease/istore.git
+    cd istore/luci && mv luci-app-store ../../ && cd .. && rm -rf istore
+    [ -d luci-app-store ] && echo "luci-app-store.....OK"
+})
+echo "CONFIG_PACKAGE_luci-app-store=y" >> configs/rockchip/01-nanopi
+# }}
+
 # {{ Add luci-app-argonne-config
 (cd friendlywrt/package && {
     [ -d luci-app-argonne-config ] && rm -rf luci-app-argonne-config
-    git https://github.com/kenzok78/luci-app-argonne-config.git
+    git clone https://github.com/kenzok78/luci-app-argonne-config.git
     [ -d luci-app-argonne-config ] && echo "luci-app-argonne-config.....OK"
 })
 echo "CONFIG_PACKAGE_luci-app-argonne-config=y" >> configs/rockchip/01-nanopi
